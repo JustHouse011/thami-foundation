@@ -75,7 +75,12 @@ export const leadership: {
   role: 'Founder',
   organisation: 'Thami Dish Foundation',
   // Only set to an authentic, licensed or Foundation-provided portrait of Thami.
-  portrait: null,
+  portrait: {
+    src: '/images/Thami.png',
+    alt: 'Portrait of Thami Kotlolo, founder of the Thami Dish Foundation',
+    width: 743,
+    height: 909,
+  },
   biography: [
     'Thami Kotlolo, widely known as Thami Dish, is a South African media personality, social entrepreneur and LGBTQIA+ activist whose work sits at the intersection of advocacy, culture, media and fashion.',
     'As founder of the Thami Dish Foundation, his work has focused on creating greater visibility, conversation and opportunity for LGBTQIA+ communities.',
