@@ -1,0 +1,4 @@
+﻿import { motion, useReducedMotion } from 'framer-motion';
+import { images } from '../../data/content';
+import { Reveal } from '../ui/Primitives';
+export function Manifesto(){const reduced=useReducedMotion();return <section className="manifesto" id="stories" aria-label="Our manifesto"><motion.img initial={reduced?false:{scale:1.04}} whileInView={{scale:1}} viewport={{once:true}} transition={{duration:1.3}} src={images.manifesto} alt="An intimate editorial portrait with a spectrum of light across a Black person's cheek" loading="lazy" width="1536" height="1024"/><div className="container manifesto-inner"><Reveal><blockquote>“A world where<br/>everyone belongs<br/>is possible.<br/>And we’re building it.”</blockquote><p className="quote-credit">— Thami Dish</p></Reveal><Reveal className="editorial-note" delay={0.3}><span className="editorial-rule"/>Real people<br/>Real stories<br/>Real change</Reveal></div></section>}

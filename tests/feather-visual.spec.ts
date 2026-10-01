@@ -1,0 +1,22 @@
+import { test, expect } from '@playwright/test';
+test('Feather Awards touch actions and close visual inspection', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  await page.goto('/feather-awards');
+  await page.screenshot({ path: 'docs/feather-awards-mobile-hero.png' });
+  await page.getByRole('button', { name: 'Open menu' }).tap();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.getByRole('button', { name: 'Close dialog' }).tap();
+  await page.getByRole('link', { name: 'Enter the Feathers' }).tap();
+  await expect(page.locator('#feather-intro-title')).toBeInViewport();
+  await context.close();
+  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+  await desktop.goto('/feather-awards');
+  await desktop.screenshot({ path: 'docs/feather-awards-desktop-hero.png' });
+  await desktop.locator('footer').scrollIntoViewIfNeeded();
+  await desktop.screenshot({ path: 'docs/feather-awards-desktop-footer.png' });
+  const footerSpacing = await desktop.locator('footer nav').evaluate(nav => ({ gap: getComputedStyle(nav).gap, items: Array.from(nav.children).map(el => ({ text: el.textContent, left: el.getBoundingClientRect().left, right: el.getBoundingClientRect().right })) }));
+  console.log(JSON.stringify(footerSpacing));
+  for (let i = 1; i < footerSpacing.items.length; i++) expect(footerSpacing.items[i].left - footerSpacing.items[i-1].right).toBeGreaterThanOrEqual(12);
+  await desktop.close();
+});

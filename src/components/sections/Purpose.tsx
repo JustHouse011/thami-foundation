@@ -1,0 +1,4 @@
+﻿import { ArrowRight } from 'lucide-react';
+import { impactStats } from '../../data/content';
+import { Reveal, SectionLabel } from '../ui/Primitives';
+export function Purpose(){return <section className="purpose container" id="purpose" aria-labelledby="purpose-title"><Reveal className="purpose-statement"><SectionLabel>Our purpose</SectionLabel><h2 id="purpose-title">Everyone deserves<br/>the freedom to<br/>become who they are.</h2><p>We support and empower young LGBTQI+ people through education, advocacy, safe spaces, scholarships and community programmes.</p><a className="pill rainbow-border" href="#ecosystem">Learn more <ArrowRight size={18}/></a></Reveal><div className="impact-grid" id="impact" aria-label="Our impact">{impactStats.map((stat,i)=><Reveal className="stat" key={stat.value} delay={i*0.08}><strong>{stat.value}</strong><p>{stat.label}</p></Reveal>)}</div></section>}

@@ -1,0 +1,136 @@
+﻿/* The single site-wide edge system. Existing rainbow-border names remain valid. */
+@property --rainbow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@property --glimmer-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes rainbowRotate { to { --rainbow-angle: 360deg; } }
+@keyframes edgeGlimmer { to { --glimmer-angle: 360deg; } }
+
+/* No padding, border, radius or background changes on the host. */
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow) {
+  position: relative;
+  isolation: isolate;
+  --edge-width: 1px;
+  --edge-opacity: .76;
+  --glimmer-opacity: .38;
+  --edge-glow: 0;
+}
+:is(.rainbow-border--feature,.rainbow-border--glow) {
+  --edge-opacity: .86;
+  --glimmer-opacity: .72;
+  --edge-glow: .1;
+}
+.rainbow-border--primary {
+  --edge-opacity: .9;
+  --glimmer-opacity: .9;
+  --edge-glow: .12;
+}
+/* Two independent masked layers. Unsupported masking uses a static border image. */
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before,
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+}
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before {
+  border: var(--edge-width) solid transparent;
+  border-image: linear-gradient(115deg,var(--rainbow-spectrum)) 1;
+  opacity: var(--edge-opacity);
+}
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after { content: none; }
+
+@supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before,
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after,
+  .rainbow-border-light::before {
+    border: 0;
+    padding: var(--edge-width);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before {
+    background: conic-gradient(from var(--rainbow-angle),var(--rainbow-spectrum));
+    animation: rainbowRotate 8s linear infinite;
+  }
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after {
+    content: '';
+    background: conic-gradient(from var(--glimmer-angle),transparent 0deg 325deg,rgba(255,255,255,.05) 338deg,rgba(255,255,255,.45) 346deg,#fff 352deg,rgba(255,255,255,.45) 357deg,transparent 360deg);
+    opacity: var(--glimmer-opacity);
+    animation: edgeGlimmer 3.6s linear infinite;
+    z-index: 3;
+  }
+  /* Blur the already hollow child, not a solid rainbow surface. */
+  .rainbow-border-light::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(from var(--rainbow-angle),var(--rainbow-spectrum));
+    animation: rainbowRotate 8s linear infinite;
+  }
+}
+.rainbow-border-light,.rainbow-border-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.rainbow-border-light {
+  z-index: -1;
+  opacity: var(--edge-glow);
+  filter: blur(7px);
+  transition: opacity .25s;
+}
+.rainbow-border-shine { overflow: hidden; z-index: 1; }
+.rainbow-border-shine::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(110deg,transparent 42%,#ffffff16 50%,transparent 58%);
+  transform: translateX(-85%);
+  transition: transform .75s ease;
+}
+/* The host is not clipped: glows and focus outlines remain outside its bounds. */
+.pill { overflow: visible; }
+:is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow):is(:hover,:focus-visible) {
+  --edge-opacity: .87;
+  --glimmer-opacity: .48;
+}
+:is(.rainbow-border--feature,.rainbow-border--glow):is(:hover,:focus-visible) {
+  --edge-opacity: .98;
+  --glimmer-opacity: .84;
+  --edge-glow: .12;
+}
+.rainbow-border--primary:is(:hover,:focus-visible) {
+  --edge-opacity: 1;
+  --glimmer-opacity: 1;
+  --edge-glow: .15;
+}
+.rainbow-border--primary:is(:hover,:focus-visible)>.rainbow-border-shine::before { transform: translateX(85%); }
+:is(a,button):is(.rainbow-border,.pill,.platform-card):active { --glimmer-opacity: 1; }
+/* Keep the Donate flagship black, including the Feather header. */
+.site-header .donate-button,.site-header.header-dark:not(.scrolled) .donate-button,.impact-cta-actions .rainbow-border--primary {
+  background: var(--foreground);
+  color: var(--surface);
+}
+/* Explicit decoration opt-in on just two Feather feature frames. */
+.feather-page .editorial-image.rainbow-border { overflow: visible; }
+@media (max-width: 700px) {
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow) { --edge-width: 1px; }
+  .rainbow-border-light { filter: blur(4px); opacity: calc(var(--edge-glow) * .65); }
+}
+/* One-time capability detection avoids stepped motion in unregistered properties. */
+html[data-prismatic-motion='static'] :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before,
+html[data-prismatic-motion='static'] :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after,
+html[data-prismatic-motion='static'] .rainbow-border-light::before { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::before,
+  :is(.rainbow-border,.pill,.platform-card,.circle-outline,.circle-arrow)::after,
+  .rainbow-border-light::before { animation: none; }
+  .rainbow-border-shine::before { display: none; }
+}
+
