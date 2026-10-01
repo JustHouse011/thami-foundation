@@ -9,6 +9,6 @@ export function Footer({ onOpen }: { onOpen: (overlay: Overlay) => void }) {
     <div className="footer-invitation"><p>A brighter,<br />braver Africa<br />starts with us.</p><Link to="/#get-involved" className="pill rainbow-border rainbow-border--primary"><BorderLight shine />Be part of it <RainbowIcon><ArrowUpRight size={20} /></RainbowIcon></Link></div>
     <div className="footer-connections"><nav aria-label="Footer navigation"><Link to="/about">About</Link><Link to="/programmes">Programmes</Link><Link to="/impact">Impact</Link><Link to="/feather-awards">Feather Awards</Link><Link to="/#stories">Stories</Link><button onClick={() => onOpen({ type: 'involve', kind: 'Contact' })}>Contact</button></nav><div className="social-icons">{socials.map(({ name, icon: Icon }) => <button className="icon-button" key={name} aria-label={name} onClick={() => onOpen({ type: 'social', name })}><RainbowIcon>{Icon ? <Icon size={18} strokeWidth={1.7} /> : <span className="x-icon">𝕏</span>}</RainbowIcon></button>)}</div></div>
     <Link to="/" className="footer-wordmark" aria-label="Thami Dish Foundation home">THAMI DISH<br />FOUNDATION.</Link>
-    <div className="footer-bottom"><span>© 2026 Thami Dish Foundation | Developed by Bongani Nombamba</span><span>People. Purpose. Culture. Change.</span></div>
+    <div className="footer-bottom"><span className="footer-credit">© 2026 Thami Dish Foundation | Developed by <a href="https://www.locate.africa">Bongani Nombamba</a></span><span>People. Purpose. Culture. Change.</span></div>
   </div></footer>;
 }

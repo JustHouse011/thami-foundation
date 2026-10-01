@@ -24,4 +24,5 @@
 @media(max-width:700px){.footer-invitation{align-items:start;flex-direction:column}.footer-connections{flex-direction:column;margin-block:40px 50px}.site-footer nav{gap:12px 25px}.footer-wordmark{font-size:11.5vw;padding-bottom:35px}.site-footer .social-icons{justify-content:start}.site-footer .footer-bottom{flex-direction:column;gap:12px}.site-header .header-actions .icon-button{min-width:44px;min-height:44px}.site-header .donate-button{min-height:44px}.site-header .header-actions{gap:2px}}
 @media(prefers-reduced-motion:reduce){.editorial-image:hover img{transform:none}.heart-bursts{display:none}}
 .menu-dialog nav a>.rainbow-icon{margin-left:auto}
+.site-footer .footer-credit{font-size:13px}.site-footer .footer-credit a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:#ffffff70}
 
