@@ -10,7 +10,7 @@ import type { Overlay } from '../components/ui/SiteOverlay';
 import '../styles/feather-awards.css';
 
 function Photo({ name, label, className = '', ratio }: { name: FeatherImageKey; label: string; className?: string; ratio?: string }) {
-  return <Reveal className={className}><EditorialImage image={featherImages[name]} label={label} ratio={ratio} edge={name === 'recognition' || name === 'fashion-detail'} /></Reveal>;
+  return <Reveal className={className}><EditorialImage image={featherImages[name]} label={label} ratio={ratio} edge={name === 'recognition'} /></Reveal>;
 }
 function Heading({ label, lines, id }: { label: string; lines: string[]; id: string }) {
   return <Reveal><SectionLabel>{label}</SectionLabel><h2 id={id} className="feather-heading">{lines.map(line => <span key={line}>{line}</span>)}</h2></Reveal>;
@@ -45,7 +45,7 @@ export function FeatherAwards({ onOpen }: { onOpen: (overlay: Overlay) => void }
     <section className="feather-dark" aria-labelledby="feather-carpet-title"><div className="container feather-section">
       <Heading label="04 / The red carpet" lines={['Expression', 'without apology.']} id="feather-carpet-title" />
       <div className="feather-collage feather-carpet">
-        {([{ name: 'red-carpet-01', label: 'Look / 01', word: 'Style.' }, { name: 'red-carpet-02', label: 'Look / 02', word: 'Identity.' }, { name: 'red-carpet-detail', label: 'Detail / 03', word: 'Expression.' }] as const).map(item => <article key={item.name}><SectionLabel>{item.label}</SectionLabel><Photo name={item.name} label={item.word} /><h3>{item.word}</h3></article>)}
+        {([{ name: 'red-carpet-01', label: 'Look / 01', word: 'Style.' }, { name: 'red-carpet-02', label: 'Look / 02', word: 'Identity.' }, { name: 'red-carpet-03', label: 'Look / 03', word: 'Expression.' }] as const).map(item => <article key={item.name}><SectionLabel>{item.label}</SectionLabel><Photo name={item.name} label={item.word} /><h3>{item.word}</h3></article>)}
       </div>
     </div></section>
 
@@ -53,7 +53,6 @@ export function FeatherAwards({ onOpen }: { onOpen: (overlay: Overlay) => void }
       <Heading label="05 / The stage" lines={['A stage', 'for more', 'than applause.']} id="feather-stage-title" />
       <Photo name="stage-wide" label="The stage belongs to us" className="feather-stage-wide" ratio="16 / 9" />
       <Reveal className="feather-prose"><p>Performance, storytelling and recognition transform the stage into a space where culture and visibility meet.</p><span className="feather-margin-note">Sound. Movement. Presence.</span></Reveal>
-      <Photo name="stage-close" label="Voice" className="feather-stage-close" />
     </div></section>
 
     <section className="container feather-section feather-recognition" aria-labelledby="feather-recognition-title">
@@ -71,7 +70,7 @@ export function FeatherAwards({ onOpen }: { onOpen: (overlay: Overlay) => void }
 
     <section className="feather-dark" aria-labelledby="feather-fashion-title"><div className="container feather-section">
       <Heading label="08 / Fashion as language" lines={['What we wear', 'can say:', 'I am here.']} id="feather-fashion-title" />
-      <div className="feather-collage feather-fashion">{([{ name: 'fashion-01', label: 'Look / 01', caption: 'Presence.' }, { name: 'fashion-02', label: 'Portrait / 02', caption: 'I am visible.' }, { name: 'fashion-detail', label: 'Detail / 03', caption: 'Expression is in the details.' }] as const).map(item => <article key={item.name}><SectionLabel>{item.label}</SectionLabel><Photo name={item.name} label={item.caption} /><p>{item.caption}</p></article>)}</div>
+      <div className="feather-collage feather-fashion">{([{ name: 'fashion-01', label: 'Look / 01', caption: 'Presence.' }, { name: 'fashion-02', label: 'Look / 02', caption: 'I am visible.' }] as const).map(item => <article key={item.name}><SectionLabel>{item.label}</SectionLabel><Photo name={item.name} label={item.caption} /><p>{item.caption}</p></article>)}</div>
     </div></section>
 
     <section className="container feather-section feather-people" aria-labelledby="feather-people-title">
@@ -82,14 +81,12 @@ export function FeatherAwards({ onOpen }: { onOpen: (overlay: Overlay) => void }
 
     <section className="feather-dark" aria-labelledby="feather-history-title"><div className="container feather-section feather-history">
       <Heading label="10 / The journey" lines={['A celebration', 'becomes', 'a legacy.']} id="feather-history-title" />
-      <Photo name="history" label="We have been building this" ratio="3 / 2" />
       <ol className="feather-chapters" aria-label="The journey in conceptual chapters">{['Beginning', 'Visibility', 'Community', 'Culture', 'Legacy'].map((chapter, i) => <li key={chapter}><span>0{i + 1}</span>{chapter}<RainbowIcon><ArrowDown size={20} /></RainbowIcon></li>)}</ol>
       <Reveal className="feather-prose"><p>A moment of recognition can live beyond the night. In the stories we carry. In the space we make for each other. In what the next generation sees as possible.</p></Reveal>
     </div></section>
 
     <section className="container feather-section feather-backstage" aria-labelledby="feather-backstage-title">
       <Heading label="11 / Behind the lights" lines={['Before the stage,', 'there is the', 'human moment.']} id="feather-backstage-title" />
-      <Photo name="backstage" label="Before the lights" />
       <Reveal className="feather-prose"><p>Before the lights, the cameras and the applause, there are people preparing, creating and showing up as themselves.</p></Reveal>
     </section>
 

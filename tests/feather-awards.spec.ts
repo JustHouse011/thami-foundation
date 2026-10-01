@@ -12,8 +12,10 @@ for (const width of [375, 390, 430, 768, 1024, 1280, 1440, 1920]) {
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('h1')).toHaveText('VISIBLE.FEARLESS.CELEBRATED.');
     await expect(page.locator('main section')).toHaveCount(15);
-    await expect(page.locator('.editorial-image-placeholder')).toHaveCount(18);
-    await expect(page.locator('main img')).toHaveCount(0);
+    await expect(page.locator('.editorial-image-placeholder')).toHaveCount(0);
+    const imagePaths = await page.locator('main img').evaluateAll(images => images.map(image => image.getAttribute('src')).sort());
+    expect(imagePaths).toEqual(Array.from({ length: 14 }, (_, index) => `/images/f${index + 1}.jpg`).sort());
+    await expect(page.locator('main img')).toHaveCount(14);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(0);
     for (const section of await page.locator('main section').all()) {
       await section.scrollIntoViewIfNeeded();
@@ -23,6 +25,8 @@ for (const width of [375, 390, 430, 768, 1024, 1280, 1440, 1920]) {
       expect(box!.x).toBeGreaterThanOrEqual(0);
       expect(box!.x + box!.width).toBeLessThanOrEqual(width + 1);
     }
+    await expect.poll(() => page.locator('main img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true);
+    await expect(page.locator('.editorial-image-placeholder')).toHaveCount(0);
     if (width < 700) {
       const tops = await page.locator('.feather-hero-layout').evaluate(el => ['.feather-hero-eyebrow', 'h1', '.feather-hero-photo', '.feather-hero-copy', '.feather-enter'].map(s => el.querySelector(s)!.getBoundingClientRect().top));
       expect(tops).toEqual([...tops].sort((a,b) => a-b));
